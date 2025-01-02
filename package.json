@@ -1,0 +1,18 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "[![Actions Status](https://github.com/Ivanblin/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Ivanblin/frontend-project-12/actions)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx start-server -s ./frontend/dist",
+    "start-front": "serve -s ./frontend/dist/",
+    "build": "npm run build --prefix frontend",
+    "postinstall": "cd frontend && npm ci"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hexlet/chat-server": "^2.0.4"
+  }
+}
