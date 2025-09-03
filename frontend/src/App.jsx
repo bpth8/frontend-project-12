@@ -1,18 +1,20 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ChatPage from './components/ChatPage';
 import LoginPage from './components/LoginPage';
 import NotFoundPage from './components/NotFoundPage';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   return (
     <Router>
-      <nav>
-        <Link to="/">Чат</Link> | <Link to="/login">Вход</Link>
-      </nav>
       <Routes>
-        <Route path="/" element={<ChatPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={
+          <PrivateRoute>
+            <ChatPage />
+          </PrivateRoute>
+        } />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
