@@ -4,7 +4,8 @@
   "description": "[![Actions Status](https://github.com/bpth8/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/bpth8/frontend-project-12/actions)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:server": "chat-server"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,7 @@
     "url": "https://github.com/bpth8/frontend-project-12/issues"
   },
   "homepage": "https://github.com/bpth8/frontend-project-12#readme",
-  "dependencies": {
+  "devDependencies": {
     "@hexlet/chat-server": "^2.0.4"
   }
 }

@@ -10,7 +10,7 @@ const LoginPage = () => {
 
   const handleLogin = async (values, { setSubmitting }) => {
     try {
-      const response = await axios.post('тут бэк-сервер', values);
+      const response = await axios.post('/api/v1/login', values);
       const { token } = response.data;
       localStorage.setItem('token', token);
       navigate('/');
