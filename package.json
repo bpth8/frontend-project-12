@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:server": "chat-server"
+    "start:server": "node ./node_modules/@hexlet/chat-server/bin/index.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
     "url": "https://github.com/bpth8/frontend-project-12/issues"
   },
   "homepage": "https://github.com/bpth8/frontend-project-12#readme",
-  "devDependencies": {
+  "dependencies": {
     "@hexlet/chat-server": "^2.0.4"
   }
 }

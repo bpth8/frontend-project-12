@@ -6,7 +6,12 @@ import { Container, Row, Col, Nav, Form, Button, Spinner } from 'react-bootstrap
 const ChatPage = () => {
   const dispatch = useDispatch();
   
-  const { channels, messages, loadingStatus, error } = useSelector((state) => state.channelsInfo);
+const {
+  channels = [],
+  messages = [],
+  loadingStatus = 'idle',
+  error = null,
+} = useSelector((state) => state.channelsInfo || {});
 
   useEffect(() => {
     dispatch(fetchData());
