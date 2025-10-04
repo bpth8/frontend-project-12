@@ -12,7 +12,7 @@ const renderChannels = (channel, isRemovableChannel, handleOpenModal) => (
   <li className="nav-item w-100" key={channel.id}>
     {
       isRemovableChannel(channel) ?
-      (a
+      (
         <DropdownButton
           openModal={handleOpenModal}
           channel={channel}
