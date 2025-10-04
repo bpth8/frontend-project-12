@@ -98,6 +98,6 @@ const ru = {
       },
     },
   },
-};
+}
 
-export default { ru };
+export default { ru }

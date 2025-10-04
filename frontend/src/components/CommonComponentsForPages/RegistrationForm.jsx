@@ -41,7 +41,8 @@ const RegistrationForm = () => {
         const res = await signUp(trimmedValues).unwrap()
         auth.logIn(res.token, trimmedValues.username)
         navigate(routes.mainPagePath())
-      } catch (error) {
+      }
+      catch (error) {
         formik.setSubmitting(false)
         if (error.status === 401) {
           inputRef.current.select()

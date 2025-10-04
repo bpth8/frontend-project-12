@@ -10,7 +10,7 @@ export const channelNamesShema = (channelNames, t) =>
       .required(t('modal.validation.required')),
   })
 
-export const signUpShema = (t) =>
+export const signUpShema = t =>
   object({
     username: string()
       .trim()

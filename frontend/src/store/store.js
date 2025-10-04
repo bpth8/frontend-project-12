@@ -9,7 +9,7 @@ const store = configureStore({
     activeChannel: activeChannelReducer,
     modal: modalReducer,
   },
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(chatApi.middleware),
 })
 

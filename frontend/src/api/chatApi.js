@@ -4,7 +4,7 @@ export const chatApi = createApi({
   reducerPath: 'chatApi',
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/v1',
-    prepareHeaders: headers => {
+    prepareHeaders: (headers) => {
       const token = localStorage.getItem('token')
       if (token) {
         headers.set('Authorization', `Bearer ${token}`)
