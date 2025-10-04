@@ -1,27 +1,27 @@
-import { useState, useEffect, useMemo } from 'react';
-import AuthContext from './AuthContext';
+import { useState, useEffect, useMemo } from 'react'
+import AuthContext from './AuthContext'
 
 const AuthProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('token'));
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('token'))
 
   const logIn = (token, username) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('username', username);
-    setLoggedIn(true);
-  };
+    localStorage.setItem('token', token)
+    localStorage.setItem('username', username)
+    setLoggedIn(true)
+  }
 
   const logOut = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    setLoggedIn(false);
-  };
+    localStorage.removeItem('token')
+    localStorage.removeItem('username')
+    setLoggedIn(false)
+  }
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token')
     if (token) {
-      setLoggedIn(true);
+      setLoggedIn(true)
     }
-  }, []);
+  }, [])
 
   const authValue = useMemo(
     () => ({
@@ -30,13 +30,13 @@ const AuthProvider = ({ children }) => {
       logOut,
     }),
     [loggedIn],
-  );
+  )
 
   return (
     <AuthContext.Provider value={authValue}>
       {children}
     </AuthContext.Provider>
-  );
-};
+  )
+}
 
-export default AuthProvider;
+export default AuthProvider

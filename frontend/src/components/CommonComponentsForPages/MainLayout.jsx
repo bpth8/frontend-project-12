@@ -1,12 +1,12 @@
-import { Navbar, Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import useAuth from '../../customHooks/useAuth';
-import routes from '../../routes/routes';
+import { Navbar, Container } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import useAuth from '../../customHooks/useAuth'
+import routes from '../../routes/routes'
 
 const MainLayout = ({ children }) => {
-  const { t } = useTranslation();
-  const { loggedIn, logOut } = useAuth();
+  const { t } = useTranslation()
+  const { loggedIn, logOut } = useAuth()
 
   return (
     <div className="d-flex flex-column h-100">
@@ -27,7 +27,7 @@ const MainLayout = ({ children }) => {
       </Navbar>
       {children}
     </div>
-  );
-};
+  )
+}
 
-export default MainLayout;
+export default MainLayout

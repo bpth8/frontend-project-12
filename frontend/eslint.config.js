@@ -1,5 +1,5 @@
-import globals from 'globals';
-import pluginReact from 'eslint-plugin-react';
+import globals from 'globals'
+import pluginReact from 'eslint-plugin-react'
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -17,9 +17,9 @@ export default [
   {
     rules:
     {
-      semi: 'error',
+      'semi': 'error',
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
     },
   },
-];
+]

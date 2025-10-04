@@ -1,7 +1,7 @@
-import ChatContainer from '../components/ComponentsForChat/ChatContainer';
+import ChatContainer from '../components/ComponentsForChat/ChatContainer'
 
 const ChatPage = () => (
   <ChatContainer />
-);
+)
 
-export default ChatPage;
+export default ChatPage

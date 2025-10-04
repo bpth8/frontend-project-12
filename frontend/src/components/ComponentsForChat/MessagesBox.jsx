@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react'
 
 const MessagesBox = ({ channelMessages }) => {
-  const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef(null)
   useEffect(() => {
-    messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
-  }, [channelMessages]);
+    messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight
+  }, [channelMessages])
 
   return (
     <div
@@ -20,7 +20,7 @@ const MessagesBox = ({ channelMessages }) => {
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default MessagesBox;
+export default MessagesBox

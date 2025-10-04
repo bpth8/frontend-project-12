@@ -1,25 +1,25 @@
-import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useFormik } from 'formik';
-import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
-import { Button, Form } from 'react-bootstrap';
-import useAuth from '../../customHooks/useAuth';
-import routes from '../../routes/routes';
-import { useSignUpMutation } from '../../api/chatApi';
-import { signUpShema } from '../../registrationRequirement/registrationRequirement';
+import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useFormik } from 'formik'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+import { Button, Form } from 'react-bootstrap'
+import useAuth from '../../customHooks/useAuth'
+import routes from '../../routes/routes'
+import { useSignUpMutation } from '../../api/chatApi'
+import { signUpShema } from '../../registrationRequirement/registrationRequirement'
 
 const RegistrationForm = () => {
-  const { t } = useTranslation();
-  const [registerFailed, setRegisterFailed] = useState(false);
-  const [signUp] = useSignUpMutation();
-  const auth = useAuth();
-  const navigate = useNavigate();
+  const { t } = useTranslation()
+  const [registerFailed, setRegisterFailed] = useState(false)
+  const [signUp] = useSignUpMutation()
+  const auth = useAuth()
+  const navigate = useNavigate()
 
-  const inputRef = useRef(null);
+  const inputRef = useRef(null)
   useEffect(() => {
-    inputRef.current.focus();
-  }, []);
+    inputRef.current.focus()
+  }, [])
 
   const formik = useFormik({
     initialValues: {
@@ -30,34 +30,34 @@ const RegistrationForm = () => {
 
     validationSchema: signUpShema(t),
     onSubmit: async (values) => {
-      setRegisterFailed(false);
+      setRegisterFailed(false)
       const trimmedValues = {
         username: values.username.trim(),
         password: values.password.trim(),
         confirmPassword: values.confirmPassword.trim(),
-      };
+      }
 
       try {
-        const res = await signUp(trimmedValues).unwrap();
-        auth.logIn(res.token, trimmedValues.username);
-        navigate(routes.mainPagePath());
+        const res = await signUp(trimmedValues).unwrap()
+        auth.logIn(res.token, trimmedValues.username)
+        navigate(routes.mainPagePath())
       } catch (error) {
-        formik.setSubmitting(false);
+        formik.setSubmitting(false)
         if (error.status === 401) {
-          inputRef.current.select();
-          toast.error(t('toastify.error.authError'));
+          inputRef.current.select()
+          toast.error(t('toastify.error.authError'))
         }
         if (error.status === 409) {
-          inputRef.current.select();
-          setRegisterFailed(true);
+          inputRef.current.select()
+          setRegisterFailed(true)
         }
         if (error.message === 'Network Error') {
-          inputRef.current.select();
-          toast.error(t('toastify.error.connectionError'));
+          inputRef.current.select()
+          toast.error(t('toastify.error.connectionError'))
         }
       }
     },
-  });
+  })
 
   return (
     <Form onSubmit={formik.handleSubmit} className="w-50">
@@ -119,7 +119,7 @@ const RegistrationForm = () => {
         {t('registrationForm.submitButton')}
       </Button>
     </Form>
-  );
-};
+  )
+}
 
-export default RegistrationForm;
+export default RegistrationForm

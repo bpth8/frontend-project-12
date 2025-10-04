@@ -1,24 +1,24 @@
-import { Button, Form, Modal } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { useRef, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
-import filter from 'leo-profanity';
-import { useFormik } from 'formik';
-import { useRenameChannelMutation, useGetChannelsQuery } from '../../api/chatApi';
-import { channelNamesShema } from '../../registrationRequirement/registrationRequirement';
+import { Button, Form, Modal } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
+import { useRef, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+import filter from 'leo-profanity'
+import { useFormik } from 'formik'
+import { useRenameChannelMutation, useGetChannelsQuery } from '../../api/chatApi'
+import { channelNamesShema } from '../../registrationRequirement/registrationRequirement'
 
 const RenameModal = ({ closeModal }) => {
-  const { t } = useTranslation();
-  const channel = useSelector((state) => state.modal.channel);
-  const { data: channels } = useGetChannelsQuery();
-  const [renameChannel] = useRenameChannelMutation();
-  const channelNames = channels?.map((c) => c.name);
+  const { t } = useTranslation()
+  const channel = useSelector((state) => state.modal.channel)
+  const { data: channels } = useGetChannelsQuery()
+  const [renameChannel] = useRenameChannelMutation()
+  const channelNames = channels?.map((c) => c.name)
 
-  const inputRef = useRef(null);
+  const inputRef = useRef(null)
   useEffect(() => {
-    inputRef.current.select();
-  }, []);
+    inputRef.current.select()
+  }, [])
 
   const formik = useFormik({
     initialValues: {
@@ -26,25 +26,25 @@ const RenameModal = ({ closeModal }) => {
     },
     validationSchema: channelNamesShema(channelNames, t),
     onSubmit: async ({ name }) => {
-      const filteredName = filter.clean(name);
+      const filteredName = filter.clean(name)
       const updatedChannel = {
         id: channel.id,
         name: filteredName,
-      };
+      }
       try {
-        await renameChannel(updatedChannel);
-        toast.success(t('toastify.success.rename'));
-        closeModal();
+        await renameChannel(updatedChannel)
+        toast.success(t('toastify.success.rename'))
+        closeModal()
       } catch (error) {
-        console.log(error);
+        console.log(error)
         if (error.message === 'Network Error') {
-          toast.error(t('toastify.error.connectionError'));
+          toast.error(t('toastify.error.connectionError'))
         } else {
-          toast.error(t('toastify.error.error'));
+          toast.error(t('toastify.error.error'))
         }
       }
     },
-  });
+  })
 
   return (
     <Modal show="true" onHide={closeModal} centered>
@@ -91,7 +91,7 @@ const RenameModal = ({ closeModal }) => {
         </Form>
       </Modal.Body>
     </Modal>
-  );
-};
+  )
+}
 
-export default RenameModal;
+export default RenameModal

@@ -1,10 +1,10 @@
-import { useTranslation } from 'react-i18next';
-import Container from '../components/CommonComponentsForPages/Container';
-import registrationImage from '../assets/registrationImage.jpg';
-import RegistrationForm from '../components/CommonComponentsForPages/RegistrationForm';
+import { useTranslation } from 'react-i18next'
+import Container from '../components/CommonComponentsForPages/Container'
+import registrationImage from '../assets/registrationImage.jpg'
+import RegistrationForm from '../components/CommonComponentsForPages/RegistrationForm'
 
 const SignUpPage = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <Container>
@@ -15,7 +15,7 @@ const SignUpPage = () => {
         <RegistrationForm />
       </div>
     </Container>
-  );
-};
+  )
+}
 
-export default SignUpPage;
+export default SignUpPage

@@ -1,16 +1,16 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Provider } from 'react-redux';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { ToastContainer, Bounce } from 'react-toastify';
-import routes from './routes/routes';
-import NotFoundPage from './pages/NotFoundPage';
-import MainLayout from './components/CommonComponentsForPages/MainLayout';
-import MainPage from './pages/MainPage';
-import AuthProvider from './contexts/AuthProvider';
-import store from './store/store';
-import ChatPage from './pages/ChatPage';
-import SignUpPage from './pages/SignUpPage';
-import PrivateRoute from './contexts/PrivateRoute';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Provider } from 'react-redux'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { ToastContainer, Bounce } from 'react-toastify'
+import routes from './routes/routes'
+import NotFoundPage from './pages/NotFoundPage'
+import MainLayout from './components/CommonComponentsForPages/MainLayout'
+import MainPage from './pages/MainPage'
+import AuthProvider from './contexts/AuthProvider'
+import store from './store/store'
+import ChatPage from './pages/ChatPage'
+import SignUpPage from './pages/SignUpPage'
+import PrivateRoute from './contexts/PrivateRoute'
 
 const App = () => (
   <BrowserRouter>
@@ -47,6 +47,6 @@ const App = () => (
       </AuthProvider>
     </Provider>
   </BrowserRouter>
-);
+)
 
-export default App;
+export default App

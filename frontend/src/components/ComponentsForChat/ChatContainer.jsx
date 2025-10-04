@@ -1,5 +1,5 @@
-import ChannelList from './ChannelList';
-import MessagesContainer from './MessagesContainer';
+import ChannelList from './ChannelList'
+import MessagesContainer from './MessagesContainer'
 
 const ChatContainer = () => (
   <div className="container h-100 my-4 overflow-hidden rounded shadow">
@@ -8,6 +8,6 @@ const ChatContainer = () => (
       <MessagesContainer />
     </div>
   </div>
-);
+)
 
-export default ChatContainer;
+export default ChatContainer

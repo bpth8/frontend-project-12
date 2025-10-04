@@ -1,24 +1,24 @@
-import { useEffect, useRef, useState } from 'react';
-import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
-import { Button, Form } from 'react-bootstrap';
-import useAuth from '../../customHooks/useAuth';
-import routes from '../../routes/routes';
-import { useLoginMutation } from '../../api/chatApi';
+import { useEffect, useRef, useState } from 'react'
+import { useFormik } from 'formik'
+import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+import { Button, Form } from 'react-bootstrap'
+import useAuth from '../../customHooks/useAuth'
+import routes from '../../routes/routes'
+import { useLoginMutation } from '../../api/chatApi'
 
 const LoginForm = () => {
-  const { t } = useTranslation();
-  const [authFailed, setAuthFailed] = useState(false);
-  const [login] = useLoginMutation();
-  const auth = useAuth();
-  const navigate = useNavigate();
-  const inputRef = useRef();
+  const { t } = useTranslation()
+  const [authFailed, setAuthFailed] = useState(false)
+  const [login] = useLoginMutation()
+  const auth = useAuth()
+  const navigate = useNavigate()
+  const inputRef = useRef()
 
   useEffect(() => {
-    inputRef.current.focus();
-  }, []);
+    inputRef.current.focus()
+  }, [])
 
   const formik = useFormik({
     initialValues: {
@@ -26,24 +26,24 @@ const LoginForm = () => {
       password: '',
     },
     onSubmit: async (values) => {
-      setAuthFailed(false);
+      setAuthFailed(false)
 
       try {
-        const res = await login(values).unwrap();
-        auth.logIn(res.token, values.username);
-        navigate(routes.mainPagePath());
+        const res = await login(values).unwrap()
+        auth.logIn(res.token, values.username)
+        navigate(routes.mainPagePath())
       } catch (error) {
-        formik.setSubmitting(false);
+        formik.setSubmitting(false)
         if (error.status === 401) {
-          setAuthFailed(true);
-          inputRef.current.select();
+          setAuthFailed(true)
+          inputRef.current.select()
         }
         if (error.message === 'Network Error') {
-          toast.error(t('toastify.error.connectionError'));
+          toast.error(t('toastify.error.connectionError'))
         }
       }
     },
-  });
+  })
 
   return (
     <Form
@@ -89,7 +89,7 @@ const LoginForm = () => {
         {t('loginForm.buttonSubmit')}
       </Button>
     </Form>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm

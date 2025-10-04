@@ -1,7 +1,7 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
 
 const ChannelButtonAdd = ({ openModal }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <button type="button" className="p-0 text-primary btn btn-group-vertical" onClick={() => openModal('adding')}>
@@ -17,7 +17,7 @@ const ChannelButtonAdd = ({ openModal }) => {
       </svg>
       <span className="visually-hidden">{t('channelTitle.addButton')}</span>
     </button>
-  );
-};
+  )
+}
 
-export default ChannelButtonAdd;
+export default ChannelButtonAdd

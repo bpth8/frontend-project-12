@@ -1,6 +1,6 @@
-import AddModal from './AddModal';
-import RemoveModal from './RemoveModal';
-import RenameModal from './RenameModal';
+import AddModal from "./AddModal";
+import RemoveModal from "./RemoveModal";
+import RenameModal from "./RenameModal";
 
 const modals = {
   adding: AddModal,

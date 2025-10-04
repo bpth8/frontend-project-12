@@ -1,27 +1,27 @@
-import { Button, Form, Modal } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
-import { useRemoveChannelMutation } from '../../api/chatApi';
+import { Button, Form, Modal } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+import { useRemoveChannelMutation } from '../../api/chatApi'
 
 const RemoveModal = ({ closeModal }) => {
-  const { t } = useTranslation();
-  const [removeChannel] = useRemoveChannelMutation();
-  const channel = useSelector((state) => state.modal.channel);
+  const { t } = useTranslation()
+  const [removeChannel] = useRemoveChannelMutation()
+  const channel = useSelector((state) => state.modal.channel)
   const handleRemove = async (currentChannel) => {
     try {
-      await removeChannel(currentChannel);
-      toast.success(t('toastify.success.remove'));
-      closeModal();
+      await removeChannel(currentChannel)
+      toast.success(t('toastify.success.remove'))
+      closeModal()
     } catch (error) {
-      console.log(error);
+      console.log(error)
       if (error.message === 'Network Error') {
-        toast.error(t('toastify.error.connectionError'));
+        toast.error(t('toastify.error.connectionError'))
       } else {
-        toast.error(t('toastify.error.error'));
+        toast.error(t('toastify.error.error'))
       }
     }
-  };
+  }
 
   return (
     <Modal show="true" onHide={closeModal} centered>
@@ -48,7 +48,7 @@ const RemoveModal = ({ closeModal }) => {
         </Form.Group>
       </Modal.Body>
     </Modal>
-  );
-};
+  )
+}
 
-export default RemoveModal;
+export default RemoveModal

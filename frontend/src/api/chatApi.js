@@ -1,15 +1,15 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const chatApi = createApi({
   reducerPath: 'chatApi',
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/v1',
     prepareHeaders: (headers) => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('token')
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
+        headers.set('Authorization', `Bearer ${token}`)
       }
-      return headers;
+      return headers
     },
   }),
   endpoints: (builder) => ({
@@ -61,7 +61,7 @@ export const chatApi = createApi({
       }),
     }),
   }),
-});
+})
 
 export const {
   useLoginMutation,
@@ -72,4 +72,4 @@ export const {
   useRemoveChannelMutation,
   useGetMessagesQuery,
   useAddMessagesMutation,
-} = chatApi;
+} = chatApi

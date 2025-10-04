@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import notFoundImage404 from '../assets/404NotFoundImage.jpg';
-import routes from '../routes/routes.js';
+import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import notFoundImage404 from '../assets/404NotFoundImage.jpg'
+import routes from '../routes/routes.js'
 
 const NotFoundPage = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <div className="text-center">
@@ -15,7 +15,7 @@ const NotFoundPage = () => {
         <Link to={routes.mainPagePath()}>{t('notFoundPage.link')}</Link>
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default NotFoundPage;
+export default NotFoundPage

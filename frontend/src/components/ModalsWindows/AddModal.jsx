@@ -1,20 +1,20 @@
-import { Button, Form, Modal } from 'react-bootstrap';
-import { useRef, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useFormik } from 'formik';
-import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
-import filter from 'leo-profanity';
-import { useAddChannelMutation, useGetChannelsQuery } from '../../api/chatApi';
-import { channelNamesShema } from '../../registrationRequirement/registrationRequirement';
-import { setActiveChannel } from '../../slices/activeChannelSlice';
+import { Button, Form, Modal } from 'react-bootstrap'
+import { useRef, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { useFormik } from 'formik'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+import filter from 'leo-profanity'
+import { useAddChannelMutation, useGetChannelsQuery } from '../../api/chatApi'
+import { channelNamesShema } from '../../registrationRequirement/registrationRequirement'
+import { setActiveChannel } from '../../slices/activeChannelSlice'
 
 const AddModal = ({ closeModal }) => {
-  const { t } = useTranslation();
-  const [addChannel] = useAddChannelMutation();
-  const { data: channels } = useGetChannelsQuery();
-  const channelNames = channels?.map((channel) => channel.name);
-  const dispatch = useDispatch();
+  const { t } = useTranslation()
+  const [addChannel] = useAddChannelMutation()
+  const { data: channels } = useGetChannelsQuery()
+  const channelNames = channels?.map((channel) => channel.name)
+  const dispatch = useDispatch()
 
   const formik = useFormik({
     initialValues: {
@@ -23,26 +23,26 @@ const AddModal = ({ closeModal }) => {
     validationSchema: channelNamesShema(channelNames, t),
     onSubmit: async ({ name }) => {
       try {
-        const filteredName = filter.clean(name);
-        const newChannel = await addChannel({ name: filteredName });
-        dispatch(setActiveChannel(newChannel.data));
-        toast.success(t('toastify.success.add'));
-        closeModal();
+        const filteredName = filter.clean(name)
+        const newChannel = await addChannel({ name: filteredName })
+        dispatch(setActiveChannel(newChannel.data))
+        toast.success(t('toastify.success.add'))
+        closeModal()
       } catch (error) {
-        console.log(error);
+        console.log(error)
         if (error.message === 'Network Error') {
-          toast.error(t('toastify.error.connectionError'));
+          toast.error(t('toastify.error.connectionError'))
         } else {
-          toast.error(t('toastify.error.error'));
+          toast.error(t('toastify.error.error'))
         }
       }
     },
-  });
+  })
 
-  const inputRef = useRef(null);
+  const inputRef = useRef(null)
   useEffect(() => {
-    inputRef.current.focus();
-  }, []);
+    inputRef.current.focus()
+  }, [])
 
   return (
     <Modal show="true" onHide={closeModal} centered>
@@ -89,7 +89,7 @@ const AddModal = ({ closeModal }) => {
         </Modal.Body>
       </Form>
     </Modal>
-  );
-};
+  )
+}
 
-export default AddModal;
+export default AddModal

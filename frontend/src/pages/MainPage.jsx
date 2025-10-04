@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import Container from '../components/CommonComponentsForPages/Container';
-import loginImage from '../assets/loginImage.jpg';
-import LoginForm from '../components/CommonComponentsForPages/LoginForm';
-import routes from '../routes/routes';
+import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import Container from '../components/CommonComponentsForPages/Container'
+import loginImage from '../assets/loginImage.jpg'
+import LoginForm from '../components/CommonComponentsForPages/LoginForm'
+import routes from '../routes/routes'
 
 const LoginPage = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   return (
     <Container>
       <div className="card-body row p-5">
@@ -22,7 +22,7 @@ const LoginPage = () => {
         </div>
       </div>
     </Container>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage
