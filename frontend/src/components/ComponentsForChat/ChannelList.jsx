@@ -17,10 +17,10 @@ const renderChannels = (channel, isRemovableChannel, handleOpenModal) => (
               openModal={handleOpenModal}
               channel={channel}
             />
-        )
+          )
         : (
             <ChannelItem channel={channel} />
-        )
+          )
     }
   </li>
 )
