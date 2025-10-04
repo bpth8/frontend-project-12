@@ -1,14 +1,13 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "[![Actions Status](https://github.com/Ivanblin/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Ivanblin/frontend-project-12/actions)",
-  "main": "index.js",
+  "description": "[![Actions Status](https://github.com/OnlySkillsR/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/OnlySkillsR/frontend-project-12/actions)",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx start-server -s ./frontend/dist",
-    "start-front": "serve -s ./frontend/dist/",
     "build": "npm run build --prefix frontend",
-    "postinstall": "cd frontend && npm ci"
+    "start": "start-server -s ./frontend/build",
+    "postinstall": "cd frontend && npm ci",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
