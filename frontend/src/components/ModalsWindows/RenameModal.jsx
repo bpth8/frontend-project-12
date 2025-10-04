@@ -10,10 +10,10 @@ import { channelNamesShema } from '../../registrationRequirement/registrationReq
 
 const RenameModal = ({ closeModal }) => {
   const { t } = useTranslation()
-  const channel = useSelector((state) => state.modal.channel)
+  const channel = useSelector(state => state.modal.channel)
   const { data: channels } = useGetChannelsQuery()
   const [renameChannel] = useRenameChannelMutation()
-  const channelNames = channels?.map((c) => c.name)
+  const channelNames = channels?.map(c => c.name)
 
   const inputRef = useRef(null)
   useEffect(() => {
@@ -35,11 +35,13 @@ const RenameModal = ({ closeModal }) => {
         await renameChannel(updatedChannel)
         toast.success(t('toastify.success.rename'))
         closeModal()
-      } catch (error) {
+      }
+      catch (error) {
         console.log(error)
         if (error.message === 'Network Error') {
           toast.error(t('toastify.error.connectionError'))
-        } else {
+        }
+        else {
           toast.error(t('toastify.error.error'))
         }
       }

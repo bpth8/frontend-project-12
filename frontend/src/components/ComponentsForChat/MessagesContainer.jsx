@@ -15,7 +15,7 @@ const MessagesContainer = () => {
   const { activeChannelId, activeChannelName } = useActiveChannel(activeChannel)
   const { data: messages, isLoading } = useGetMessagesQuery()
   const [addMessage] = useAddMessagesMutation()
-  const channelMessages = messages?.filter((message) => message.channelId === activeChannelId)
+  const channelMessages = messages?.filter(message => message.channelId === activeChannelId)
   const countMessages = channelMessages?.length || 0
   const username = localStorage.getItem('username')
 

@@ -7,17 +7,19 @@ import { useRemoveChannelMutation } from '../../api/chatApi'
 const RemoveModal = ({ closeModal }) => {
   const { t } = useTranslation()
   const [removeChannel] = useRemoveChannelMutation()
-  const channel = useSelector((state) => state.modal.channel)
+  const channel = useSelector(state => state.modal.channel)
   const handleRemove = async (currentChannel) => {
     try {
       await removeChannel(currentChannel)
       toast.success(t('toastify.success.remove'))
       closeModal()
-    } catch (error) {
+    }
+    catch (error) {
       console.log(error)
       if (error.message === 'Network Error') {
         toast.error(t('toastify.error.connectionError'))
-      } else {
+      }
+      else {
         toast.error(t('toastify.error.error'))
       }
     }

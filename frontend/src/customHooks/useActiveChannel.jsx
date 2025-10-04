@@ -6,7 +6,7 @@ const useActiveChannel = (channel = defaultChannel) => {
   if (isLoading) {
     return { activeChannelId: null, activeChannelName: 'Loading...' }
   }
-  const foundChannel = channels?.find((c) => c.id === channel.id)
+  const foundChannel = channels?.find(c => c.id === channel.id)
   const activeChannel = foundChannel || defaultChannel
   const activeChannelId = activeChannel.id
   const activeChannelName = activeChannel.name

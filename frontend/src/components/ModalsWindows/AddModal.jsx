@@ -13,7 +13,7 @@ const AddModal = ({ closeModal }) => {
   const { t } = useTranslation()
   const [addChannel] = useAddChannelMutation()
   const { data: channels } = useGetChannelsQuery()
-  const channelNames = channels?.map((channel) => channel.name)
+  const channelNames = channels?.map(channel => channel.name)
   const dispatch = useDispatch()
 
   const formik = useFormik({
@@ -28,11 +28,13 @@ const AddModal = ({ closeModal }) => {
         dispatch(setActiveChannel(newChannel.data))
         toast.success(t('toastify.success.add'))
         closeModal()
-      } catch (error) {
+      }
+      catch (error) {
         console.log(error)
         if (error.message === 'Network Error') {
           toast.error(t('toastify.error.connectionError'))
-        } else {
+        }
+        else {
           toast.error(t('toastify.error.error'))
         }
       }

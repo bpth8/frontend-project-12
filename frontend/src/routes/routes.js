@@ -1,7 +1,7 @@
 const routes = {
-  mainPagePath: () => "/",
-  loginPagePath: () => "/login",
-  signUpPagePath: () => "/signup",
+  mainPagePath: () => '/',
+  loginPagePath: () => '/login',
+  signUpPagePath: () => '/signup',
 };
 
-export default routes;
+export default routes

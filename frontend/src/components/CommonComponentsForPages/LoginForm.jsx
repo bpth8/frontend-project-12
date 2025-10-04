@@ -32,7 +32,8 @@ const LoginForm = () => {
         const res = await login(values).unwrap()
         auth.logIn(res.token, values.username)
         navigate(routes.mainPagePath())
-      } catch (error) {
+      }
+      catch (error) {
         formik.setSubmitting(false)
         if (error.status === 401) {
           setAuthFailed(true)

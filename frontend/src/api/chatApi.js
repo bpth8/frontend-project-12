@@ -4,7 +4,7 @@ export const chatApi = createApi({
   reducerPath: 'chatApi',
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/v1',
-    prepareHeaders: (headers) => {
+    prepareHeaders: headers => {
       const token = localStorage.getItem('token')
       if (token) {
         headers.set('Authorization', `Bearer ${token}`)
@@ -12,16 +12,16 @@ export const chatApi = createApi({
       return headers
     },
   }),
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     login: builder.mutation({
-      query: (user) => ({
+      query: user => ({
         url: 'login',
         method: 'POST',
         body: user,
       }),
     }),
     signUp: builder.mutation({
-      query: (newUser) => ({
+      query: newUser => ({
         url: 'signup',
         method: 'POST',
         body: newUser,
@@ -31,7 +31,7 @@ export const chatApi = createApi({
       query: () => 'channels',
     }),
     addChannel: builder.mutation({
-      query: (channelName) => ({
+      query: channelName => ({
         url: 'channels',
         method: 'POST',
         body: channelName,
@@ -54,7 +54,7 @@ export const chatApi = createApi({
       query: () => 'messages',
     }),
     addMessages: builder.mutation({
-      query: (newMessage) => ({
+      query: newMessage => ({
         url: 'messages',
         method: 'POST',
         body: newMessage,

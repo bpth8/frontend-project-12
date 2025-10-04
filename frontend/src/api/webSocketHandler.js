@@ -51,19 +51,19 @@ const setupWebSocketListeners = (store) => {
   })
 
   socket.on('removeChannel', (channel) => {
-    dispatch(chatApi.util.updateQueryData('getChannels', undefined, (draft) => {
+    dispatch(chatApi.util.updateQueryData('getChannels', undefined, draft => {
       const index = draft.findIndex((c) => c.id === channel.id)
       if (index !== -1) {
         draft.splice(index, 1)
       }
     }))
 
-    dispatch(chatApi.util.updateQueryData('getMessages', undefined, (draft) => draft.filter((message) => message.channelId !== channel.id)))
+    dispatch(chatApi.util.updateQueryData('getMessages', undefined, draft => draft.filter((message) => message.channelId !== channel.id)))
   })
 
   socket.on('renameChannel', (channel) => {
-    dispatch(chatApi.util.updateQueryData('getChannels', undefined, (draft) => {
-      const currentChannel = draft.find((c) => c.id === channel.id)
+    dispatch(chatApi.util.updateQueryData('getChannels', undefined, draft => {
+      const currentChannel = draft.find(c => c.id === channel.id)
       if (currentChannel) {
         currentChannel.name = channel.name
       }

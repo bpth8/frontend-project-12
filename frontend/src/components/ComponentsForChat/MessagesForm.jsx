@@ -27,11 +27,13 @@ const MessagesForm = ({
         await addMessage(newMessage)
         setFieldValue('body', '')
         inputRef.current.focus()
-      } catch (error) {
+      }
+      catch (error) {
         console.log(error)
         if (error.message === 'Network Error') {
           toast.error(t('toastify.error.connectionError'))
-        } else {
+        }
+        else {
           toast.error(t('toastify.error.error'))
         }
       }
