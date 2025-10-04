@@ -11,15 +11,16 @@ import getModal from '../ModalsWindows/index'
 const renderChannels = (channel, isRemovableChannel, handleOpenModal) => (
   <li className="nav-item w-100" key={channel.id}>
     {
-      isRemovableChannel(channel) ?
-      (
-        <DropdownButton
-          openModal={handleOpenModal}
-          channel={channel}
-        />
-      ) : (
-        <ChannelItem channel={channel} />
-      )
+      isRemovableChannel(channel)
+        ? (
+          <DropdownButton
+            openModal={handleOpenModal}
+            channel={channel}
+          />
+        )
+        : (
+          <ChannelItem channel={channel} />
+        )
     }
   </li>
 )
