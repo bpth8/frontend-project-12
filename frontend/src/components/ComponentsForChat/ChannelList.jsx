@@ -13,13 +13,13 @@ const renderChannels = (channel, isRemovableChannel, handleOpenModal) => (
     {
       isRemovableChannel(channel)
         ? (
-          <DropdownButton
-            openModal={handleOpenModal}
-            channel={channel}
-          />
+            <DropdownButton
+              openModal={handleOpenModal}
+              channel={channel}
+            />
         )
         : (
-          <ChannelItem channel={channel} />
+            <ChannelItem channel={channel} />
         )
     }
   </li>
