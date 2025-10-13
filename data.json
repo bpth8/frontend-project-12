@@ -1,0 +1,9 @@
+{
+  "channels": [
+    { "id": "1", "name": "general", "removable": false },
+    { "id": "2", "name": "random", "removable": false }
+  ],
+  "messages": [
+    { "id": "1", "body": "Welcome to Hexlet Chat!", "channelId": "1", "username": "system" }
+  ]
+}
