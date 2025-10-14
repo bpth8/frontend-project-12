@@ -2,14 +2,15 @@ import React from 'react';
 import { Formik, Field, Form } from 'formik';
 import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { useSocket } from '../contexts/SocketContext';
+import { useAuth } from '../contexts/AuthContext';
+import axios from 'axios';
 
 const MessageForm = () => {
   const { currentChannelId } = useSelector((state) => state.channels);
-  const username = localStorage.getItem('username') || 'admin';
   
-  const { sendNewMessage } = useSocket();
-
+  const auth = useAuth();
+  const token = auth.getToken();
+  const username = localStorage.getItem('username') || 'admin';
   const handleSubmit = async (values, { resetForm, setSubmitting }) => {
     setSubmitting(true);
     
@@ -18,13 +19,15 @@ const MessageForm = () => {
       channelId: currentChannelId,
       username,
     };
+    
+    const headers = { Authorization: `Bearer ${token}` };
 
     try {
-      await sendNewMessage(messageData);
+      await axios.post('/api/v1/messages', messageData, { headers });
       
       resetForm();
     } catch (e) {
-      console.error('Ошибка отправки сообщения:', e);
+      console.error('Ошибка отправки сообщения через HTTP:', e);
     } finally {
       setSubmitting(false);
     }

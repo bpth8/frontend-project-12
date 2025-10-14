@@ -1,3 +1,4 @@
+import './i18n.js';
 import { Routes, Route } from 'react-router-dom';
 import ChatPage from './components/ChatPage';
 import LoginPage from './components/LoginPage';
