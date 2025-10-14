@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const routes = {
-  channelsPath: '/api/v1/channels', 
-  messagesPath: '/api/v1/messages', 
+  channelsPath: '/api/v1/channels',
+  messagesPath: '/api/v1/messages',
   channelPath: (id) => `/api/v1/channels/${id}`,
 };
 
@@ -17,18 +17,18 @@ export const fetchData = createAsyncThunk(
         axios.get(routes.channelsPath, { headers }),
         axios.get(routes.messagesPath, { headers }),
       ]);
-      
+
       const channels = channelsResponse.data;
       const messages = messagesResponse.data;
-      
-      const currentChannelId = channels.length > 0 ? channels[0].id : null; 
+
+      const currentChannelId = channels.length > 0 ? channels[0].id : null;
 
       return { channels, messages, currentChannelId };
     } catch (error) {
       if (error.response) {
-        return rejectWithValue(error.response.statusText);
+        return rejectWithValue({ status: error.response.status, message: error.response.statusText });
       }
-      return rejectWithValue('Network error or server unreachable');
+      return rejectWithValue({ status: null, message: 'Network error or server unreachable' });
     }
   }
 );
@@ -40,7 +40,7 @@ export const removeChannel = createAsyncThunk(
       const token = getState().auth.token;
       const headers = { Authorization: `Bearer ${token}` };
       await axios.delete(routes.channelPath(id), { headers });
-      return id; 
+      return id;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -69,7 +69,7 @@ const channelsSlice = createSlice({
       const { id } = action.payload;
       state.channels = state.channels.filter((channel) => channel.id !== id);
       if (state.currentChannelId === id) {
-        state.currentChannelId = 1; 
+        state.currentChannelId = 1;
       }
     },
     renameChannelSocket: (state, action) => {
@@ -94,7 +94,11 @@ const channelsSlice = createSlice({
       })
       .addCase(fetchData.rejected, (state, action) => {
         state.loadingStatus = 'failed';
-        state.error = action.payload || action.error.message;
+        if (action.payload && action.payload.status === 401) {
+          state.error = 'Unauthorized';
+        } else {
+          state.error = action.payload?.message || action.error.message;
+        }
       })
       .addCase(removeChannel.fulfilled, (state) => {
         state.error = null;

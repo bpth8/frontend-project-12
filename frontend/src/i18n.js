@@ -14,6 +14,24 @@ const resources = {
         renaming: 'Переименование...',
         removing: 'Удаление...',
       },
+
+      header: {
+        logout: 'Выйти',
+      },
+
+      login: {
+        noAccount: 'Нет аккаунта? ',
+        signupLink: 'Регистрация',
+      },
+
+      signup: {
+        header: 'Регистрация',
+        username: 'Имя пользователя',
+        password: 'Пароль',
+        confirmPassword: 'Подтвердите пароль',
+        submit: 'Зарегистрироваться',
+      },
+
       validation: {
         required: 'Обязательное поле',
         channelMin: 'От 3 до 20 символов',
@@ -22,6 +40,10 @@ const resources = {
         channelName: 'Имя канала',
         channelNamePlaceholder: 'Введите имя канала',
         networkError: 'Ошибка сети. Попробуйте еще раз.',
+        usernameMinMax: 'От 3 до 20 символов',
+        passwordMin: 'Не менее 6 символов',
+        passwordMatch: 'Пароли должны совпадать',
+        userExists: 'Такой пользователь уже существует',
       },
     },
   },

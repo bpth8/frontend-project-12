@@ -22,7 +22,7 @@ const ChatPage = () => {
   const navigate = useNavigate();
   const { socket } = useSocket();
 
-  const { currentChannelId, loadingStatus, channels } = useSelector((state) => state.channels);
+  const { currentChannelId, loadingStatus, channels, error } = useSelector((state) => state.channels);
   const messages = useSelector((state) => state.messages.messages);
 
   const [modalInfo, setModalInfo] = useState({ type: null, item: null });
@@ -68,6 +68,13 @@ const ChatPage = () => {
     };
   }, [socket, dispatch, loadingStatus]);
 
+  // НОВЫЙ useEffect для отслеживания ошибки 401 и логаута
+  useEffect(() => {
+    if (error === 'unauthorized') {
+      auth.logOut();
+      navigate('/login');
+    }
+  }, [error, auth, navigate]);
 
   const currentChannel = useMemo(() => 
     channels.find((c) => c.id === currentChannelId) || { name: 'Неизвестно' },
@@ -80,7 +87,6 @@ const ChatPage = () => {
   );
   
   const ModalComponent = modals[modalInfo.type];
-
 
   if (loadingStatus === 'loading') {
     return (
@@ -99,22 +105,15 @@ const ChatPage = () => {
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">
       <div className="row h-100 bg-white flex-md-row">
-        
-        {}
         <ChannelsBox handleShowModal={handleShowModal} />
-
-        {}
         <div className="col p-0 h-100">
           <div className="d-flex flex-column h-100">
-            {}
             <div className="bg-light mb-4 p-3 shadow-sm small">
               <p className="m-0"><b># {currentChannel.name}</b></p>
               <span className="text-muted">
                 {currentMessages.length} {currentMessages.length === 1 ? 'сообщение' : 'сообщения'}
               </span>
             </div>
-
-            {}
             <div id="messages-box" className="chat-messages overflow-auto px-5">
               {currentMessages.map((message) => (
                 <div key={message.id} className="text-break mb-2">
@@ -123,8 +122,6 @@ const ChatPage = () => {
                 </div>
               ))}
             </div>
-
-            {}
             <div className="mt-auto px-5 py-3">
               <MessageForm />
             </div>
@@ -132,7 +129,6 @@ const ChatPage = () => {
         </div>
       </div>
       
-      {}
       {ModalComponent && (
         <ModalComponent 
           show={!!modalInfo.type} 
