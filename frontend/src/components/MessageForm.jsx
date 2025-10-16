@@ -10,7 +10,7 @@ const MessageForm = () => {
   
   const auth = useAuth();
   const token = auth.getToken();
-  const username = localStorage.getItem('username') || 'admin';
+  const username = auth.username;
   const handleSubmit = async (values, { resetForm, setSubmitting }) => {
     setSubmitting(true);
     

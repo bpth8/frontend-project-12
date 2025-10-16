@@ -18,7 +18,7 @@ const LoginPage = () => {
       
       const { token } = response.data; 
       
-      auth.logIn(token); 
+      auth.logIn(token, values.username); 
       
       navigate('/'); 
 
