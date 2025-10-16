@@ -1,28 +1,26 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { useAuth } from '../../contexts/AuthContext';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import { removeChannel } from '../../slices/channelsSlice';
 
-const RemoveChannelModal = ({ show, handleClose, modalInfo }) => {
+const RemoveChannelModal = ({ show, handleClose, modalInfo, sendMessage }) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
-  const auth = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { id: channelId, name: channelName } = modalInfo.item;
-  const url = `/api/v1/channels/${channelId}`;
-  const token = auth.getToken();
-  const headers = { Authorization: `Bearer ${token}` };
 
   const handleRemove = async () => {
     setIsSubmitting(true);
-
     try {
-      await axios.delete(url, { headers });
+      await dispatch(removeChannel({ id: channelId, sendMessage }));
+      toast.success(t('notifications.channel_removed'));
       handleClose();
-    } catch (e) {
-      console.error('Ошибка удаления канала:', e);
-      alert(t('validation.networkError'));
+    } catch (error) {
+      toast.error(t('notifications.network_error'));
+      console.error('Ошибка удаления канала:', error);
     } finally {
       setIsSubmitting(false);
     }
@@ -42,11 +40,21 @@ const RemoveChannelModal = ({ show, handleClose, modalInfo }) => {
       </Modal.Body>
 
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose} disabled={isSubmitting}>
+        <Button
+          variant="secondary"
+          onClick={handleClose}
+          disabled={isSubmitting}
+        >
           {t('modals.cancel')}
         </Button>
-        <Button variant="danger" onClick={handleRemove} disabled={isSubmitting}>
-          {isSubmitting ? t('modals.removing') : t('modals.removeChannel')}
+        <Button
+          variant="danger"
+          onClick={handleRemove}
+          disabled={isSubmitting}
+        >
+          {isSubmitting
+            ? t('modals.removing')
+            : t('modals.removeChannel')}
         </Button>
       </Modal.Footer>
     </Modal>

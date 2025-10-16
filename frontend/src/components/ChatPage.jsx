@@ -9,12 +9,15 @@ import MessageForm from '../components/MessageForm';
 import AddChannelModal from '../components/modals/AddChannelModal';
 import RenameChannelModal from '../components/modals/RenameChannelModal';
 import RemoveChannelModal from '../components/modals/RemoveChannelModal';
+import { toast } from 'react-toastify';
 
 const modals = {
   adding: AddChannelModal,
   renaming: RenameChannelModal,
   removing: RemoveChannelModal,
 };
+
+const SOCKET_TIMEOUT = 5000;
 
 const ChatPage = () => {
   const dispatch = useDispatch();
@@ -26,6 +29,7 @@ const ChatPage = () => {
   const messages = useSelector((state) => state.messages.messages);
 
   const [modalInfo, setModalInfo] = useState({ type: null, item: null });
+
   const handleShowModal = (type, item = null) => setModalInfo({ type, item });
   const handleCloseModal = () => setModalInfo({ type: null, item: null });
 
@@ -36,13 +40,13 @@ const ChatPage = () => {
       navigate('/login');
       return;
     }
-    
+
     dispatch(fetchData(token));
   }, [auth, dispatch, navigate]);
 
   useEffect(() => {
     if (!socket || loadingStatus !== 'succeeded') return;
-    
+
     socket.on('newMessage', (payload) => {
       dispatch({ type: 'messages/addMessage', payload });
     });
@@ -51,9 +55,10 @@ const ChatPage = () => {
       dispatch({ type: 'channels/addChannel', payload });
       dispatch({ type: 'channels/setCurrentChannel', payload: payload.id });
     });
-    
-    socket.on('removeChannel', (payload) => {
-      dispatch({ type: 'channels/removeChannelSocket', payload });
+
+    socket.on('channelRemoved', (data) => {
+      dispatch({ type: 'channels/removeChannelSocket', payload: { id: data.id } });
+      toast.info('Канал успешно удален!');
     });
 
     socket.on('renameChannel', (payload) => {
@@ -63,12 +68,11 @@ const ChatPage = () => {
     return () => {
       socket.off('newMessage');
       socket.off('newChannel');
-      socket.off('removeChannel');
+      socket.off('channelRemoved');
       socket.off('renameChannel');
     };
   }, [socket, dispatch, loadingStatus]);
 
-  // НОВЫЙ useEffect для отслеживания ошибки 401 и логаута
   useEffect(() => {
     if (error === 'unauthorized') {
       auth.logOut();
@@ -76,16 +80,31 @@ const ChatPage = () => {
     }
   }, [error, auth, navigate]);
 
-  const currentChannel = useMemo(() => 
-    channels.find((c) => c.id === currentChannelId) || { name: 'Неизвестно' },
+  const sendMessage = (event, data) => new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error('Socket operation timed out'));
+    }, SOCKET_TIMEOUT);
+
+    socket.emit(event, data, (response) => {
+      clearTimeout(timer);
+      if (response.status === 'ok') {
+        resolve();
+      } else {
+        reject(new Error(response.status || 'Socket error'));
+      }
+    });
+  });
+
+  const currentChannel = useMemo(
+    () => channels.find((c) => c.id === currentChannelId) || { name: 'Неизвестно' },
     [channels, currentChannelId]
   );
-  
-  const currentMessages = useMemo(() => 
-    messages.filter((m) => m.channelId === currentChannelId),
+
+  const currentMessages = useMemo(
+    () => messages.filter((m) => m.channelId === currentChannelId),
     [messages, currentChannelId]
   );
-  
+
   const ModalComponent = modals[modalInfo.type];
 
   if (loadingStatus === 'loading') {
@@ -99,9 +118,13 @@ const ChatPage = () => {
   }
 
   if (loadingStatus === 'failed') {
-    return <div className="text-danger text-center mt-5">Не удалось загрузить данные чата. Проверьте подключение и повторите вход.</div>;
+    return (
+      <div className="text-danger text-center mt-5">
+        Не удалось загрузить данные чата. Проверьте подключение и повторите вход.
+      </div>
+    );
   }
-  
+
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">
       <div className="row h-100 bg-white flex-md-row">
@@ -123,17 +146,18 @@ const ChatPage = () => {
               ))}
             </div>
             <div className="mt-auto px-5 py-3">
-              <MessageForm />
+              <MessageForm sendMessage={sendMessage} />
             </div>
           </div>
         </div>
       </div>
-      
+
       {ModalComponent && (
-        <ModalComponent 
-          show={!!modalInfo.type} 
-          handleClose={handleCloseModal} 
+        <ModalComponent
+          show={!!modalInfo.type}
+          handleClose={handleCloseModal}
           modalInfo={modalInfo}
+          sendMessage={sendMessage}
         />
       )}
     </div>

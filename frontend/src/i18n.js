@@ -45,6 +45,13 @@ const resources = {
         passwordMatch: 'Пароли должны совпадать',
         userExists: 'Такой пользователь уже существует',
       },
+
+      notifications: {
+        channel_removed: 'Канал успешно удалён',
+        channel_added: 'Канал успешно создан',
+        channel_renamed: 'Канал успешно переименован',
+        network_error: 'Ошибка сети. Попробуйте позже',
+      },
     },
   },
 };

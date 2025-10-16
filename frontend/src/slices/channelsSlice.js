@@ -1,10 +1,27 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const routes = {
   channelsPath: '/api/v1/channels',
   messagesPath: '/api/v1/messages',
   channelPath: (id) => `/api/v1/channels/${id}`,
+};
+
+const handleAxiosError = (error, defaultMessage = 'Произошла ошибка.') => {
+  if (!error.response) {
+    toast.error('Ошибка сети. Не удалось подключиться к серверу.');
+    return { status: null, message: 'Network error or server unreachable' };
+  }
+
+  const { status, statusText } = error.response;
+
+  if (status === 401) {
+    return { status, message: 'Unauthorized' };
+  }
+
+  toast.error(defaultMessage);
+  return { status, message: statusText || defaultMessage };
 };
 
 export const fetchData = createAsyncThunk(
@@ -20,26 +37,21 @@ export const fetchData = createAsyncThunk(
 
       const channels = channelsResponse.data;
       const messages = messagesResponse.data;
-
       const currentChannelId = channels.length > 0 ? channels[0].id : null;
 
       return { channels, messages, currentChannelId };
     } catch (error) {
-      if (error.response) {
-        return rejectWithValue({ status: error.response.status, message: error.response.statusText });
-      }
-      return rejectWithValue({ status: null, message: 'Network error or server unreachable' });
+      const handledError = handleAxiosError(error, 'Ошибка загрузки данных.');
+      return rejectWithValue(handledError);
     }
   }
 );
 
 export const removeChannel = createAsyncThunk(
   'channels/removeChannel',
-  async (id, { getState, rejectWithValue }) => {
+  async ({ id, sendMessage }, { rejectWithValue }) => {
     try {
-      const token = getState().auth.token;
-      const headers = { Authorization: `Bearer ${token}` };
-      await axios.delete(routes.channelPath(id), { headers });
+      await sendMessage('removeChannel', { id });
       return id;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -91,16 +103,18 @@ const channelsSlice = createSlice({
         state.channels = channels;
         state.currentChannelId = currentChannelId;
         state.loadingStatus = 'succeeded';
+        state.error = null;
       })
       .addCase(fetchData.rejected, (state, action) => {
         state.loadingStatus = 'failed';
-        if (action.payload && action.payload.status === 401) {
-          state.error = 'Unauthorized';
-        } else {
-          state.error = action.payload?.message || action.error.message;
-        }
+        state.error = action.payload?.message || action.error.message;
       })
-      .addCase(removeChannel.fulfilled, (state) => {
+      .addCase(removeChannel.fulfilled, (state, action) => {
+        const removedChannelId = action.payload;
+        state.channels = state.channels.filter((channel) => channel.id !== removedChannelId);
+        if (state.currentChannelId === removedChannelId) {
+          state.currentChannelId = 1;
+        }
         state.error = null;
       })
       .addCase(removeChannel.rejected, (state, action) => {
@@ -109,5 +123,11 @@ const channelsSlice = createSlice({
   },
 });
 
-export const { setCurrentChannel, addChannel, removeChannelSocket, renameChannelSocket } = channelsSlice.actions;
+export const {
+  setCurrentChannel,
+  addChannel,
+  removeChannelSocket,
+  renameChannelSocket,
+} = channelsSlice.actions;
+
 export default channelsSlice.reducer;

@@ -5,6 +5,8 @@ import SignupPage from './pages/SignupPage';
 import NotFoundPage from './components/NotFoundPage';
 import PrivateRoute from './components/PrivateRoute'; 
 import Header from './components/Header';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -26,6 +28,19 @@ function App() {
           <Route path="/signup" element={<SignupPage />} /> {}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+
+        <ToastContainer 
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+    />
       </div>
     </div>
   );

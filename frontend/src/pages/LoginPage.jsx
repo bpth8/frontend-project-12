@@ -32,7 +32,7 @@ const LoginPage = () => {
 const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
   try {
     const response = await axios.post('/api/v1/login', values);
-    auth.logIn(response.data.token);  // <--- тут передаем только токен
+    auth.logIn(response.data.token);
     navigate('/');
   } catch (e) {
     if (e.response?.status === 401) {
